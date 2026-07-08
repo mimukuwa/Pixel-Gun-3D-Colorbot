@@ -20,9 +20,9 @@ AIMBOT_KEY         = 'x'
 TOGGLE_MODE        = True       
 
 SENSITIVITY        = 20           
-HEX_CODES_RAW      = 'e01808'    
+HEX_CODES_RAW      = 'e01808'    #don't touch the hex code 
 DOT_ENABLED        = False
-DOT_OPACITY        = 255         # 0-255
+DOT_OPACITY        = 255        
 
 SMOOTHNESS         = 3.5       
 
@@ -49,7 +49,7 @@ def parse_colors(raw):
         r = (val >> 16) & 0xFF
         g = (val >> 8)  & 0xFF
         b =  val        & 0xFF
-        colors.append((b, g, r))  # scan couleur opencv
+        colors.append((b, g, r)) 
     return colors
 
 TARGET_COLORS = parse_colors(HEX_CODES_RAW)
@@ -115,6 +115,8 @@ class FOVOverlay:
         self.root.mainloop()
 
 class DotOverlay:
+
+    
     def __init__(self):
         self.win = tk.Toplevel()
         self.win.overrideredirect(True)
@@ -240,7 +242,7 @@ class AimBot:
                 target_x = pos_x
                 target_y = pos_y + Y_OFFSET
 
-                # save last valid target 
+               
                 self.last_target_x = target_x
                 self.last_target_y = target_y
 
@@ -257,15 +259,15 @@ class AimBot:
 
                
                 if distance < 80:
-                    assist_strength = 0.6   # proche = très aim assist
+                    assist_strength = 0.6  
                 elif distance < 200:
-                    assist_strength = 0.35  # moyen
+                    assist_strength = 0.35  
                 else:
-                    assist_strength = 0.15  # loin = léger
+                    assist_strength = 0.15  
 
                 move_x = int((dx / smooth) * assist_strength)
                 move_y = int((dy / smooth) * assist_strength)
-                # Deadzone = zéro shake
+             
                 if abs(move_x) < 1:
                     move_x = 0
                 if abs(move_y) < 1:
@@ -275,7 +277,7 @@ class AimBot:
                 with self.lock:
                     self.look_x = target_x
                     self.look_y = target_y
-                # print debug (facultatif)
+              
                 if self.frame_count % 50 == 0:
                     print(
                         f"[{self.frame_count}] Target: ({pos_x:.0f}, {pos_y:.0f}) | Move: ({move_x},{move_y})")
